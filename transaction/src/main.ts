@@ -2,6 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { KafkaOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
+import { Partitioners } from 'kafkajs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +18,9 @@ async function bootstrap() {
       },
       consumer: {
         groupId: config.get('kafka.consumerGroupId')
+      },
+      producer: {
+        createPartitioner: Partitioners.LegacyPartitioner
       }
     }
   }
