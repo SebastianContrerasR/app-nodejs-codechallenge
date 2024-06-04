@@ -1,4 +1,3 @@
-// src/transaction/transaction.controller.ts
 import { Body, Controller, Get, Param, Post, Query, UseInterceptors } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Transaction } from '@prisma/client';
@@ -25,9 +24,10 @@ export class AppController {
 
     @Get()
     async getAllTransactions(@Query() paginationDto: PaginationDto) {
+
         const page = paginationDto.page || 1;
         const limit = paginationDto.limit || 10;
-        return this.appService.getAllTransactions(page, limit);
+        return this.appService.getAllTransactions(+page, +limit);
     }
 
     @MessagePattern('transaction.updated')

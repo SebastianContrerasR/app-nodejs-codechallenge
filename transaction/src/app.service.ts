@@ -1,4 +1,3 @@
-// src/transaction/transaction.service.ts
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { Transaction, TransactionStatus } from '@prisma/client';
