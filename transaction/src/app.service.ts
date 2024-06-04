@@ -1,10 +1,12 @@
 // src/transaction/transaction.service.ts
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { Transaction, TransactionStatus } from '@prisma/client';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionStatusDto } from './dto/update-transaction-status.dto';
 import { PrismaService } from './prisma/prisma.service';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class AppService {
@@ -12,7 +14,9 @@ export class AppService {
     constructor(
         private readonly prisma: PrismaService,
         @Inject('KAFKA_SERVICE')
-        private readonly kafkaClient: ClientKafka
+        private readonly kafkaClient: ClientKafka,
+        @Inject(CACHE_MANAGER)
+        private cacheManager: Cache,
     ) { }
 
     async createTransaction(data: CreateTransactionDto): Promise<Transaction> {
@@ -30,11 +34,17 @@ export class AppService {
     }
 
     async findTransactionById(id: string) {
-        return this.prisma.transaction.findUniqueOrThrow({
+        const transaction = await this.prisma.transaction.findUnique({
             where: {
                 transactionExternalId: id
             }
         })
+
+        if (!transaction) {
+            throw new NotFoundException('Transaction not found')
+        }
+
+        return transaction
     }
 
     async getAllTransactions(page: number, limit: number) {
@@ -63,5 +73,7 @@ export class AppService {
             where: { transactionExternalId: message.transactionExternalId },
             data: { status },
         });
+
+        await this.cacheManager.del(`/${message.transactionExternalId}`);
     }
 }

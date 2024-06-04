@@ -1,11 +1,12 @@
 // src/transaction/transaction.controller.ts
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseInterceptors } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Transaction } from '@prisma/client';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionStatusDto } from './dto/update-transaction-status.dto';
 import { AppService } from './app.service';
 import { PaginationDto } from './dto/pagination.dto';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller()
 export class AppController {
@@ -17,6 +18,7 @@ export class AppController {
     }
 
     @Get(':id')
+    @UseInterceptors(CacheInterceptor)
     async getTransactionById(@Param('id') id: string) {
         return this.appService.findTransactionById(id);
     }
