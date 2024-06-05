@@ -33,8 +33,8 @@ Every transaction with a value greater than 1000 should be rejected.
 # Tech Stack
 
 <ol>
-  <li>Node. You can use any framework you want (i.e. Nestjs with an ORM like TypeOrm or Prisma) </li>
-  <li>Any database</li>
+  <li>Node (Nestjs and Prisma) </li>
+  <li>Postgres</li>
   <li>Kafka</li>    
 </ol>
 
@@ -68,15 +68,68 @@ You must have two resources:
   "createdAt": "Date"
 }
 ```
+## Setup
+### In the `root` folder
+
+1. Run docker compose
+```sh
+docker compose up
+```
+
+### In the `transaction` folder
+
+1. Install packages
+```sh
+npm i
+```
+
+2. Copy the `.env.example` file to `.env` in the same folder
+```sh
+cp .env.example .env
+```
+
+3. Execute the creation of the Prisma schema with
+```sh
+npm run db:sync
+```
+This will create the schema in both shards.
+
+4. Build the application
+```sh
+npm run build
+```
+
+5. Run the application
+```sh
+npm run start
+```
+
+### In the `antifraud` folder
+
+1. Install packages
+```sh
+npm i
+```
+
+2. Copy the `.env.example` file to `.env` in the same folder
+```sh
+cp .env.example .env
+```
+
+3. Build the application
+```sh
+npm run build
+```
+
+4. Run the application
+```sh
+npm run start
+```
 
 ## Optional
 
 You can use any approach to store transaction data but you should consider that we may deal with high volume scenarios where we have a huge amount of writes and reads for the same data at the same time. How would you tackle this requirement?
 
-You can use Graphql;
-
-# Send us your challenge
-
-When you finish your challenge, after forking a repository, you **must** open a pull request to our repository. There are no limitations to the implementation, you can follow the programming paradigm, modularization, and style that you feel is the most appropriate solution.
-
-If you have any questions, please let us know.
+To address this scenario, two proposals were made:
+- The first one involves using cache for the endpoint to retrieve transactions by ID.
+- The second proposal suggests utilizing sharding with the 'TransferTypeId' attribute to distribute the load.
