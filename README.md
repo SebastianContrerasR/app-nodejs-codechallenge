@@ -126,6 +126,20 @@ npm run build
 npm run start
 ```
 
+## Endpoints and Postman Collection
+
+I provide the file `Reto YAPE.postman_collection.json`, which includes example endpoints. You can easily import it into Postman.
+
+I've developed three endpoints:
+- POST Create Transaction
+  ![image](https://github.com/SebastianContrerasR/app-nodejs-codechallenge/assets/55514936/fd7f0075-6e7d-49ea-ae30-d9fe98e60389)
+  
+- GET Get Transaction by ID
+  ![image](https://github.com/SebastianContrerasR/app-nodejs-codechallenge/assets/55514936/625988a1-5157-4404-ae09-37a3c421c664)
+  
+- GET Get Transactions (pagination)
+  ![image](https://github.com/SebastianContrerasR/app-nodejs-codechallenge/assets/55514936/e9bbf2cb-5af9-47ba-a453-fdedc1c112fd)
+
 ## Optional
 
 You can use any approach to store transaction data but you should consider that we may deal with high volume scenarios where we have a huge amount of writes and reads for the same data at the same time. How would you tackle this requirement?
