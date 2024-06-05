@@ -1,10 +1,9 @@
 export default () => ({
-    database: {
-        host: process.env.POSTGRES_HOST,
-        port: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
-        user: process.env.POSTGRES_USER,
-        password: process.env.POSTGRES_PASSWORD,
-        name: process.env.POSTGRES_DB,
+    database_shard_1: {
+        url: process.env.DATABASE_URL_1,
+    },
+    database_shard_2: {
+        url: process.env.DATABASE_URL_2,
     },
     kafka: {
         broker: process.env.KAFKA_BROKER,

@@ -1,7 +1,11 @@
 export class TransactionResponseDto {
     transactionExternalId: string;
-    transactionTypeId: number;
-    transactionStatus: string;
+    transactionType: {
+        name: string;
+    };
+    transactionStatus: {
+        name: string;
+    };
     value: number;
     createdAt: Date;
 }
