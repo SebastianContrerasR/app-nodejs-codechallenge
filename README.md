@@ -131,5 +131,7 @@ npm run start
 You can use any approach to store transaction data but you should consider that we may deal with high volume scenarios where we have a huge amount of writes and reads for the same data at the same time. How would you tackle this requirement?
 
 To address this scenario, two proposals were made:
-- The first one involves using cache for the endpoint to retrieve transactions by ID.
-- The second proposal suggests utilizing sharding with the 'TransferTypeId' attribute to distribute the load.
+
+1. **Caching for the endpoint fetching transactions by ID**: By implementing caching, we aim to improve the performance of the endpoint responsible for retrieving transactions based on their ID. This approach involves storing previously fetched data in a cache, reducing the need for repeated database queries and thereby enhancing response times.
+
+2. **Sharding based on the 'TransferTypeId' attribute**: Sharding is proposed as a method to distribute the load across multiple database shards. In this context, a pivot value of 2 is defined, determining which shard to utilize based on the value of the 'TransferTypeId' attribute. Specifically, values ranging from 1 to 2 will be directed to Shard 1, while values from 3 to 5 will be directed to Shard 2. This distribution strategy helps balance the workload and optimize resource utilization, ensuring efficient handling of transaction requests.
