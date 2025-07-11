@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { KafkaModule } from './kafka/kafka.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { TransactionModule } from './transaction/transaction.module';
 
@@ -14,23 +14,8 @@ import { TransactionModule } from './transaction/transaction.module';
       load: [configuration]
     }),
     PrismaModule,
-    ClientsModule.registerAsync([
-      {
-        name: 'KAFKA_SERVICE',
-        imports: [ConfigModule],
-        inject: [ConfigService],
-        useFactory: (configService: ConfigService) => ({
-          transport: Transport.KAFKA,
-          options: {
-            client: {
-              clientId: configService.get('kafka.clientId'),
-              brokers: [configService.get('kafka.broker')],
-            }
-          },
-        })
-      }
-    ]),
-    TransactionModule
+    TransactionModule,
+    KafkaModule
   ],
   controllers: [AppController],
   providers: [AppService],

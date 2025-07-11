@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { KafkaOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -8,7 +8,7 @@ async function bootstrap() {
   const config = app.get(ConfigService)
   const port = config.get('app.port')
 
-  const kafkaMicroService = app.connectMicroservice<MicroserviceOptions>({
+  const kafkaOptions: KafkaOptions = {
     transport: Transport.KAFKA,
     options: {
       client: {
@@ -19,11 +19,12 @@ async function bootstrap() {
         groupId: config.get('kafka.consumerGroupId')
       }
     }
-  })
+  }
 
-  app.connectMicroservice(kafkaMicroService)
+  app.connectMicroservice(kafkaOptions)
   await app.startAllMicroservices()
 
   await app.listen(port);
+  console.log('App runnig on:', port)
 }
 bootstrap();

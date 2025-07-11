@@ -1,9 +1,9 @@
 // src/transaction/transaction.controller.ts
-import { Controller, Get, Post, Body } from '@nestjs/common';
-import { TransactionService } from './transaction.service';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { TransactionResponseDto } from './dto/transaction-response.dto';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Transaction } from '@prisma/client';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { TransactionService } from './transaction.service';
 
 @Controller('transaction')
 export class TransactionController {
@@ -15,7 +15,15 @@ export class TransactionController {
     }
 
     @Get()
-    async getAllTransactions(): Promise<TransactionResponseDto[]> {
+    async getAllTransactions() {
         return this.transactionService.getAllTransactions();
+    }
+
+    @MessagePattern('transaction.updated')
+    async handleTransactionUpdated(@Payload() message: any) {
+
+        console.log('Received transaction.updated', message);
+
+        await this.transactionService.updateTransactionStatus(message)
     }
 }
