@@ -12,7 +12,7 @@ export class AppService {
   ) { }
 
   validateTransaction(transaction: TransactionDto) {
-    return transaction.value > 1000 ? TransactionStatus.REJECTED : TransactionStatus.APPROVED;
+    return (transaction.value < 0 || transaction.value > 1000) ? TransactionStatus.REJECTED : TransactionStatus.APPROVED;
   }
 
   handleValidateTransaction(transaction: TransactionDto) {
