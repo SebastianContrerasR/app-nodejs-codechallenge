@@ -19,6 +19,7 @@ export class AppService {
     const status = this.validateTransaction(transaction)
     const updateTransactionStatus = new UpdateTransactionStatusDto()
     updateTransactionStatus.transactionExternalId = transaction.transactionExternalId;
+    updateTransactionStatus.transferTypeId = transaction.transferTypeId;
     updateTransactionStatus.status = status
 
     this.kafkaClient.emit('transaction.updated', JSON.stringify(updateTransactionStatus));
