@@ -5,6 +5,7 @@ import { KafkaModule } from './kafka/kafka.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { AppController } from './app.controller';
       load: [configuration]
     }),
     PrismaModule,
-    KafkaModule
+    KafkaModule,
+    CacheModule.register({ isGlobal: true }),
   ],
   providers: [AppService],
   controllers: [AppController]
