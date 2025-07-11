@@ -132,13 +132,10 @@ I provide the file `Reto YAPE.postman_collection.json`, which includes example e
 
 I've developed three endpoints:
 - POST Create Transaction
-  ![image](https://github.com/SebastianContrerasR/app-nodejs-codechallenge/assets/55514936/fd7f0075-6e7d-49ea-ae30-d9fe98e60389)
   
 - GET Get Transaction by ID
-  ![image](https://github.com/SebastianContrerasR/app-nodejs-codechallenge/assets/55514936/625988a1-5157-4404-ae09-37a3c421c664)
   
 - GET Get Transactions (pagination)
-  ![image](https://github.com/SebastianContrerasR/app-nodejs-codechallenge/assets/55514936/e9bbf2cb-5af9-47ba-a453-fdedc1c112fd)
 
 ## Optional
 
