@@ -1,0 +1,21 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 30
+      arrivalRate: 50
+scenarios:
+  - flow:
+      - post:
+          url: "/"
+          json:
+            accountExternalIdDebit: "80e49c29-59cd-4934-8495-be372f86ec0a"
+            accountExternalIdCredit: "7280df11-1fcf-4643-a0ec-3da25f548afc"
+            transferTypeId: 1
+            value: 1000
+          capture:
+            - json: "$.transactionExternalId"
+              as: "transactionId"
+      - get:
+          url: "/{{ transactionId }}"
+      - get:
+          url: "/"

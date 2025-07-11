@@ -10,10 +10,8 @@ export class AppController {
   ) { }
 
   @MessagePattern('transaction.created')
-  async handleTransactionUpdated(@Payload() message: TransactionDto) {
+  async handleValidateTransaction(@Payload() message: TransactionDto) {
 
-    console.log('Received transaction.created', message);
-
-    await this.appService.handleTransactionEvent(message)
+    await this.appService.handleValidateTransaction(message)
   }
 }

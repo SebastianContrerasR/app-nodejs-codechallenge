@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { TransactionDto } from './dto/transaction.dto';
+import { UpdateTransactionStatusDto } from './dto/update-transaction-status.dto';
+import { TransactionStatus } from './enum/transaction-status.enum';
 
 @Injectable()
 export class AppService {
@@ -10,15 +12,15 @@ export class AppService {
   ) { }
 
   validateTransaction(transaction: TransactionDto) {
-    return transaction.value > 1000 ? 'REJECTED' : 'APPROVED';
+    return transaction.value > 1000 ? TransactionStatus.REJECTED : TransactionStatus.APPROVED;
   }
 
-  handleTransactionEvent(transaction: TransactionDto) {
+  handleValidateTransaction(transaction: TransactionDto) {
     const status = this.validateTransaction(transaction)
+    const updateTransactionStatus = new UpdateTransactionStatusDto()
+    updateTransactionStatus.transactionExternalId = transaction.transactionExternalId;
+    updateTransactionStatus.status = status
 
-    this.kafkaClient.emit('transaction.updated', JSON.stringify({
-      transactionExternalId: transaction.transactionExternalId,
-      status,
-    }));
+    this.kafkaClient.emit('transaction.updated', JSON.stringify(updateTransactionStatus));
   }
 }
