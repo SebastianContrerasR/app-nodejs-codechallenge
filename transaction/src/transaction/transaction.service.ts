@@ -1,20 +1,31 @@
 // src/transaction/transaction.service.ts
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Transaction } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { TransactionResponseDto } from './dto/transaction-response.dto';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Injectable()
 export class TransactionService {
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(
+        private readonly prisma: PrismaService,
+        @Inject('KAFKA_SERVICE')
+        private readonly kafkaClient: ClientKafka
+    ) { }
 
     async createTransaction(data: CreateTransactionDto): Promise<Transaction> {
-        return this.prisma.transaction.create({
+        const transaction = this.prisma.transaction.create({
             data: {
                 ...data,
             },
         });
+
+        this.kafkaClient.emit(
+            'transaction.created',
+            JSON.stringify(transaction)
+        );
+        return transaction
     }
 
     async getAllTransactions(): Promise<TransactionResponseDto[]> {
