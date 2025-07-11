@@ -1,5 +1,5 @@
 import { TransactionRepository } from '../../domain/contracts/transaction.repository';
-import { Transaction } from '../../domain/transaction.entity';
+import { Transaction } from '../../domain/entities/transaction.entity';
 
 export class FindTransactionUseCase {
   constructor(private readonly transactionRepo: TransactionRepository) {}

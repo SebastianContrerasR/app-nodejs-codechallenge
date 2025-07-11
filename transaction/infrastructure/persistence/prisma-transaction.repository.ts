@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionRepository } from '../../domain/contracts/transaction.repository';
-import { Transaction } from '../../domain/transaction.entity';
-import { PrismaService } from '../prisma/prisma.service';
-import { TransactionStatus } from '../../domain/enum/transaction-status.enum';
+import { Transaction } from '../../domain/entities/transaction.entity';
+import { PrismaService } from './prisma.service';
+import { TransactionStatus } from '../../domain/enums/transaction-status.enum';
 
 @Injectable()
 export class PrismaTransactionRepository implements TransactionRepository {

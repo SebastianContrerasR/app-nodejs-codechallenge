@@ -1,5 +1,5 @@
-import { TransactionStatus } from '../enum/transaction-status.enum';
-import { Transaction } from '../transaction.entity';
+import { TransactionStatus } from '../enums/transaction-status.enum';
+import { Transaction } from '../entities/transaction.entity';
 
 export interface TransactionRepository {
   create(transaction: Transaction): Promise<Transaction>;

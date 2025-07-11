@@ -1,4 +1,4 @@
-import { TransactionStatus } from '../../domain/enum/transaction-status.enum';
+import { TransactionStatus } from '../../domain/enums/transaction-status.enum';
 import { TransactionRepository } from '../../domain/contracts/transaction.repository';
 import { UpdateTransactionStatusDto } from '../dto/update-transaction-status.dto';
 

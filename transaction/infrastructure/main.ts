@@ -1,12 +1,12 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { KafkaOptions, Transport } from '@nestjs/microservices';
-import { AppModule } from './app.module';
+import { TransactionModule } from './transaction.module';
 import { Partitioners } from 'kafkajs';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(TransactionModule);
 
   app.useGlobalPipes(new ValidationPipe());
 
