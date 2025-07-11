@@ -3,9 +3,13 @@ import { NestFactory } from '@nestjs/core';
 import { KafkaOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 import { Partitioners } from 'kafkajs';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.useGlobalPipes(new ValidationPipe());
+
   const config = app.get(ConfigService)
   const port = config.get('app.port')
 
