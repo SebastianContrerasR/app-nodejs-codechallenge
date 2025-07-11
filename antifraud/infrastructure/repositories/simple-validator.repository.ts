@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionValidatorRepository } from '../../domain/contracts/transaction-validator.repository';
-import { Transaction } from '../../domain/transaction.entity';
-import { TransactionStatus } from '../../domain/enum/transaction-status.enum';
+import { Transaction } from '../../domain/entities/transaction.entity';
+import { TransactionStatus } from '../../domain/enums/transaction-status.enum';
 
 @Injectable()
 export class SimpleValidatorRepository implements TransactionValidatorRepository {
