@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Param, Post, Query, UseInterceptors } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Transaction } from '@prisma/client';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionStatusDto } from './dto/update-transaction-status.dto';
+import { Transaction } from '../domain/transaction.entity';
+import { CreateTransactionDto } from '../application/dto/create-transaction.dto';
+import { UpdateTransactionStatusDto } from '../application/dto/update-transaction-status.dto';
 import { AppService } from './app.service';
-import { PaginationDto } from './dto/pagination.dto';
+import { PaginationDto } from '../application/dto/pagination.dto';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller()

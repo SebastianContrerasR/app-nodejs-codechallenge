@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { TransactionDto } from './dto/transaction.dto';
+import { TransactionDto } from '../application/dto/transaction.dto';
 import { AppService } from './app.service';
 
 @Controller()

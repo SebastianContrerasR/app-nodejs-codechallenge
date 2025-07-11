@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "db:sync": "npx prisma db push --schema prisma/schema1.prisma && npx prisma db push --schema prisma/schema2.prisma",
+    "db:sync": "npx prisma db push --schema infrastructure/prisma/schema1.prisma && npx prisma db push --schema infrastructure/prisma/schema2.prisma",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
