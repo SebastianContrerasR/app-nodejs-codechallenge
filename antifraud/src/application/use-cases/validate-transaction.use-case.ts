@@ -1,7 +1,8 @@
 import { Logger } from '@nestjs/common';
+import { MessagingPort } from '../../domain/contracts/messaging.port';
 import { Transaction } from '../../domain/entities/transaction.entity';
 import { TransactionStatus } from '../../domain/enums/transaction-status.enum';
-import { MessagingPort } from '../../domain/contracts/messaging.port';
+import { TransactionDto } from '../dto/transaction.dto';
 import { UpdateTransactionStatusDto } from '../dto/update-transaction-status.dto';
 
 export class ValidateTransactionUseCase {
@@ -9,16 +10,21 @@ export class ValidateTransactionUseCase {
 
   constructor(private readonly messaging: MessagingPort) {}
 
-  async execute(transaction: Transaction): Promise<TransactionStatus> {
-    this.logger.log(`Validando transacción: ${JSON.stringify(transaction)}`);
+  async execute(transaction: TransactionDto): Promise<TransactionStatus> {
+    const transactionEntity = new Transaction(
+      transaction.transactionExternalId,
+      transaction.transferTypeId,
+      transaction.value
+    );
+    this.logger.log(`Validando transacción: ${JSON.stringify(transactionEntity)}`);
     const status =
-      transaction.value < 0 || transaction.value > 1000
+      transactionEntity.value < 0 || transactionEntity.value > 1000
         ? TransactionStatus.REJECTED
         : TransactionStatus.APPROVED;
     this.logger.log(`Resultado de validación: ${status}`);
     const updateTransactionStatus = new UpdateTransactionStatusDto();
-    updateTransactionStatus.transactionExternalId = transaction.transactionExternalId;
-    updateTransactionStatus.transferTypeId = transaction.transferTypeId;
+    updateTransactionStatus.transactionExternalId = transactionEntity.transactionExternalId;
+    updateTransactionStatus.transferTypeId = transactionEntity.transferTypeId;
     updateTransactionStatus.status = status;
     await this.messaging.emit('transaction.updated', updateTransactionStatus);
     this.logger.log('Evento transaction.updated emitido');
