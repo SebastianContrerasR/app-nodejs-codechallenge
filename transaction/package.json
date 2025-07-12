@@ -50,6 +50,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "jest": "^29.5.0",
+    "jest-cucumber": "^4.5.0",
     "prettier": "^3.0.0",
     "source-map-support": "^0.5.21",
     "supertest": "^6.3.3",
@@ -65,13 +66,16 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
+    "rootDir": ".",
+    "testRegex": "tests/.*\\.(spec|steps)\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "src/application/**/*.ts",
+      "src/domain/**/*.ts",
+      "!src/application/dto/**",
+      "!src/domain/dto/**"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
