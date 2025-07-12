@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { KafkaOptions, Transport } from '@nestjs/microservices';
-import { TransactionModule } from './transaction.module';
+import { TransactionModule } from './infrastructure/transaction.module';
 import { Partitioners } from 'kafkajs';
 import { ValidationPipe } from '@nestjs/common';
 

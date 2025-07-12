@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ValidateTransactionUseCase } from 'application/use-cases/validate-transaction.use-case';
+import { ValidateTransactionUseCase } from 'src/application/use-cases/validate-transaction.use-case';
 import configuration from './config/configuration';
 import { AntifraudEventController } from './controllers/antifraud.event.controller';
 import { KafkaMessagingAdapter } from './messaging/kafka-messaging.adapter';

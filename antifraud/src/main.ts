@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { KafkaOptions, Transport } from '@nestjs/microservices';
-import { AppModule } from './antifraud.module';
+import { AppModule } from './infrastructure/antifraud.module';
 import { Partitioners } from 'kafkajs';
 
 async function bootstrap() {
